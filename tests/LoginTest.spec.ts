@@ -1,6 +1,7 @@
 import test, { expect } from "@playwright/test";
 import { HomePage } from "../PageClass/HomePage";
 import { LoginPage } from "../PageClass/LoginPage";
+const configData = JSON.parse(JSON.stringify(require('../TestData/config.json')))
 
 let homePage: HomePage;
 let loginPage:LoginPage;
@@ -12,21 +13,21 @@ test.beforeEach(async function({page}){
     loginPage = new LoginPage(page)
 })
 
-test('Login Test with valid credential', async function(){
+test.only('Login Test with valid credential', async function(){
 
     await homePage.launchURL()
 
     await homePage.getHeaaderPage().navigateToLoginPage()
 
-    await loginPage.enterEmailAndContinue('')
+    await loginPage.enterEmailAndContinue(configData.email)
 
-    await loginPage.enterPasswordAndSignIn('')
+    await loginPage.enterPasswordAndSignIn(configData.password)
 
     expect(await homePage.getHeaaderPage().getUserName()).toEqual('Hello, ritesh')
 
 })
 
-test.only('Login with invalid email id', async function(){
+test('Login with invalid email id', async function(){
 
     await homePage.launchURL()
 

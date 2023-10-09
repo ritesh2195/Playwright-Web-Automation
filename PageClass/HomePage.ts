@@ -1,6 +1,6 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { HeaderPage } from './HeaderPage';
-
+const configData = JSON.parse(JSON.stringify(require('../TestData/config.json')))
 export class HomePage{
 
     readonly headerPage: HeaderPage
@@ -20,7 +20,7 @@ export class HomePage{
 
     async launchURL(){
 
-        await this.page.goto('https://amazon.in')
+        await this.page.goto(configData.url)
 
         //await this.delay(2000)
 
