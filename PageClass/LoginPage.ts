@@ -45,6 +45,8 @@ export class LoginPage{
         await this.signInButton.click()
     }
 
+    
+
     async verifyOnUnSuccessfulLoginAlert(){
 
         await this.alertIcon.waitFor({timeout:2000})
@@ -55,4 +57,5 @@ export class LoginPage{
         }
 
         return obj;
-}}        
+}
+}        

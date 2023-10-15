@@ -9,24 +9,15 @@ export class ExcelReader {
 
   constructor(filepath: string) {
     this.filepath = filepath;
-    this.fileExtension = filepath.substring(filepath.indexOf('.x'));
-    this.initialize();
+    this.fileExtension = filepath.substring(filepath.lastIndexOf('.'));
   }
 
-  public initialize() {
+  async initialize(): Promise<void> {
     try {
       const dataBuffer = fs.readFileSync(this.filepath);
       const data = new Uint8Array(dataBuffer);
-      if (this.fileExtension === '.xlsx') {
-        this.workbook = XLSX.read(data, { type: 'array' });
-      } else if (this.fileExtension === '.xls') {
-        this.workbook = XLSX.read(data, { type: 'array' });
-      }
-      if (this.workbook) {
-        this.sheet = this.workbook.Sheets[this.workbook.SheetNames[0]];
-      } else {
-        console.error('Workbook is null or undefined.');
-      }
+      this.workbook = XLSX.read(data, { type: 'array' });
+      this.sheet = this.workbook!.Sheets[this.workbook!.SheetNames[0]];
     } catch (error) {
       console.error('Error initializing workbook:', error);
     }
@@ -36,31 +27,61 @@ export class ExcelReader {
     if (!this.sheet) {
       return 0;
     }
-    const sheet = this.workbook?.Sheets[sheetname];
+    const sheet = this.workbook!.Sheets[sheetname];
     if (!sheet) {
       return 0;
     }
-    const jsonData: any[] = XLSX.utils.sheet_to_json(sheet);
-    return jsonData.length;
+
+    const range = sheet['!ref'];
+    if (!range) {
+      return 0;
+    }
+
+    const decodedRange = XLSX.utils.decode_range(range);
+    return decodedRange.e.r + 1;
   }
 
   getCellData(sheetname: string, colName: string, rowNum: number): string {
     if (!this.sheet) {
       return '';
     }
-    const sheet = this.workbook?.Sheets[sheetname];
+    const sheet = this.workbook!.Sheets[sheetname];
     if (!sheet) {
       return '';
     }
-    const jsonData: any[] = XLSX.utils.sheet_to_json(sheet);
-    const columnIndex = jsonData[0]?.indexOf(colName);
+
+    const range = sheet['!ref'];
+    if (!range) {
+      return '';
+    }
+
+    const jsonData: string[][] = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+    // Find the column index by name
+    const columnIndex = jsonData[0].indexOf(colName);
     if (columnIndex === -1) {
       return '';
     }
+
     const rowData = jsonData[rowNum - 1];
     if (rowData === undefined) {
       return '';
     }
+
     return rowData[columnIndex] || '';
   }
 }
+
+// Usage example:
+// const reader = new ExcelReader('D:\\JavaScript\\JavaScriptTutorial\\data.xlsx');
+// (async () => {
+//   try {
+//     await reader.initialize();
+//     const rowCount = reader.getRowCount('Sheet1');
+//     console.log(`Row count: ${rowCount}`);
+//     const cellData = reader.getCellData('Sheet1', 'email', 2);
+//     console.log(`Cell data: ${cellData}`);
+//   } catch (error) {
+//     console.error('An error occurred:', error);
+//   }
+// })();
