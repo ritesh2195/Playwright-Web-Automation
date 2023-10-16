@@ -2,50 +2,53 @@ import test, { expect } from "@playwright/test";
 import { HomePage } from "../PageClass/HomePage";
 import { LoginPage } from "../PageClass/LoginPage";
 import { ExcelReader } from "../Utilities/ExcelReader";
-const configData = JSON.parse(JSON.stringify(require('../TestData/config.json')))
+const configData = JSON.parse(
+  JSON.stringify(require("../TestData/config.json"))
+);
 
 let homePage: HomePage;
-let loginPage:LoginPage;
-let reader:ExcelReader; 
+let loginPage: LoginPage;
+let reader: ExcelReader;
 
-test.beforeEach(async function({page}){
+test.beforeEach(async function ({ page }) {
+  reader = new ExcelReader("TestData\\login.xlsx");
 
-    reader = new ExcelReader("TestData\\login.xlsx")
+  await reader.initialize();
 
-    await reader.initialize();
+  homePage = new HomePage(page);
 
-    homePage = new HomePage(page)
+  loginPage = new LoginPage(page);
+});
 
-    loginPage = new LoginPage(page)
-})
+test("Login Test with valid credential", async function () {
+  await homePage.launchURL();
 
-test('Login Test with valid credential', async function(){
+  await homePage.getHeaaderPage().navigateToLoginPage();
 
-    await homePage.launchURL()
+  await loginPage.enterEmailAndContinue(configData.email);
 
-    await homePage.getHeaaderPage().navigateToLoginPage()
+  await loginPage.enterPasswordAndSignIn(configData.password);
 
-    await loginPage.enterEmailAndContinue(configData.email)
+  expect(await homePage.getHeaaderPage().getUserName()).toEqual(
+    "Hello, ritesh"
+  );
+});
 
-    await loginPage.enterPasswordAndSignIn(configData.password)
+test.only("Login with invalid email id", async function () {
+  await homePage.launchURL();
 
-    expect(await homePage.getHeaaderPage().getUserName()).toEqual('Hello, ritesh')
+  await homePage.getHeaaderPage().navigateToLoginPage();
 
-})
+  await loginPage.enterEmailAndContinue(
+    reader.getCellData("Sheet1", "Email", 2)
+  );
 
-test.only('Login with invalid email id', async function(){
+  const { isAlrtIconDisplayed, isAlertHeaderDisplayed, isAlertMessage } =
+    await loginPage.verifyOnUnSuccessfulLoginAlert();
 
-    await homePage.launchURL()
+  expect(isAlrtIconDisplayed).toBeTruthy();
 
-    await homePage.getHeaaderPage().navigateToLoginPage()
+  expect(isAlertHeaderDisplayed).toBeTruthy();
 
-    await loginPage.enterEmailAndContinue(reader.getCellData('Sheet1', 'Email', 2))
-
-    const {isAlrtIconDisplayed,isAlertHeaderDisplayed,isAlertMessage} = await loginPage.verifyOnUnSuccessfulLoginAlert()
-
-    expect(isAlrtIconDisplayed).toBeTruthy()
-
-    expect(isAlertHeaderDisplayed).toBeTruthy()
-
-    expect(isAlertMessage).toBeTruthy()
-})
+  expect(isAlertMessage).toBeTruthy();
+});

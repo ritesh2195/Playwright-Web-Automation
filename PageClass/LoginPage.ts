@@ -1,61 +1,60 @@
 import { Locator, Page } from "@playwright/test";
 
-export class LoginPage{
+export class LoginPage {
+  readonly page: Page;
+  readonly emailInput: Locator;
+  readonly passwordInput: Locator;
+  readonly continueButton: Locator;
+  readonly signInButton: Locator;
+  readonly alertIcon: Locator;
+  readonly alertHeaderText: Locator;
+  readonly alertMessage: Locator;
 
-    readonly page:Page;
-    readonly emailInput:Locator
-    readonly passwordInput:Locator
-    readonly continueButton:Locator
-    readonly signInButton:Locator
-    readonly alertIcon:Locator
-    readonly alertHeaderText:Locator
-    readonly alertMessage:Locator
+  constructor(page: Page) {
+    this.page = page;
 
-    constructor(page:Page){
+    this.emailInput = page.locator("id=ap_email");
 
-        this.page = page
+    this.passwordInput = page.locator("id=ap_password");
 
-        this.emailInput = page.locator("id=ap_email")
+    this.continueButton = page.locator("id=continue").nth(1);
 
-        this.passwordInput = page.locator("id=ap_password")
+    this.signInButton = page.locator("id=signInSubmit");
 
-        this.continueButton = page.locator("id=continue").nth(1)
+    this.alertIcon = page
+      .locator("//i[contains(@class,'a-icon-alert')]")
+      .nth(0);
 
-        this.signInButton = page.locator("id=signInSubmit")
+    this.alertHeaderText = page.locator(
+      "//h4[contains(text(),'There was a problem')]"
+    );
 
-        this.alertIcon = page.locator("//i[contains(@class,'a-icon-alert')]").nth(0)
+    this.alertMessage = page.locator(
+      "//span[contains(text(),'We cannot find an account with that email address')]"
+    );
+  }
 
-        this.alertHeaderText = page.locator("//h4[contains(text(),'There was a problem')]")
+  async enterEmailAndContinue(email: string) {
+    await this.emailInput.fill(email);
 
-        this.alertMessage = page.locator("//span[contains(text(),'We cannot find an account with that email address')]")
+    await this.continueButton.click();
+  }
 
-    }
+  async enterPasswordAndSignIn(password: string) {
+    await this.passwordInput.fill(password);
 
-    async enterEmailAndContinue(email:string){
+    await this.signInButton.click();
+  }
 
-        await this.emailInput.fill(email)
+  async verifyOnUnSuccessfulLoginAlert() {
+    await this.alertIcon.waitFor({ timeout: 2000 });
 
-        await this.continueButton.click()
-    }
+    const obj = {
+      isAlrtIconDisplayed: await this.alertIcon.isVisible(),
+      isAlertHeaderDisplayed: await this.alertHeaderText.isVisible(),
+      isAlertMessage: await this.alertMessage.isVisible(),
+    };
 
-    async enterPasswordAndSignIn(password:string){
-
-        await this.passwordInput.fill(password)
-
-        await this.signInButton.click()
-    }
-
-    
-
-    async verifyOnUnSuccessfulLoginAlert(){
-
-        await this.alertIcon.waitFor({timeout:2000})
-
-        const obj ={isAlrtIconDisplayed: await this.alertIcon.isVisible(),
-            isAlertHeaderDisplayed: await this.alertHeaderText.isVisible(),
-            isAlertMessage: await this.alertMessage.isVisible()
-        }
-
-        return obj;
+    return obj;
+  }
 }
-}        

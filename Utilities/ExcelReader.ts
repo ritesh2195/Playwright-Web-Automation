@@ -71,17 +71,3 @@ export class ExcelReader {
     return rowData[columnIndex] || '';
   }
 }
-
-// Usage example:
-// const reader = new ExcelReader('D:\\JavaScript\\JavaScriptTutorial\\data.xlsx');
-// (async () => {
-//   try {
-//     await reader.initialize();
-//     const rowCount = reader.getRowCount('Sheet1');
-//     console.log(`Row count: ${rowCount}`);
-//     const cellData = reader.getCellData('Sheet1', 'email', 2);
-//     console.log(`Cell data: ${cellData}`);
-//   } catch (error) {
-//     console.error('An error occurred:', error);
-//   }
-// })();
