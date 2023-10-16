@@ -13,16 +13,9 @@ export class HomePage{
         this.headerPage = new HeaderPage(page)
     }
 
-    delay(ms: number) {
-
-        return new Promise( resolve => setTimeout(resolve, ms) );
-    }
-
     async launchURL(){
 
-        await this.page.goto(configData.url)
-
-        //await this.delay(2000)
+        await this.page.goto(configData.env.url)
 
         await this.page.goto('https://amazon.in')
     }

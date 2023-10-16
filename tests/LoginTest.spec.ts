@@ -30,11 +30,11 @@ test("Login Test with valid credential", async function () {
   await loginPage.enterPasswordAndSignIn(configData.password);
 
   expect(await homePage.getHeaaderPage().getUserName()).toEqual(
-    "Hello, ritesh"
+    `Hello, ${configData.name}`
   );
 });
 
-test.only("Login with invalid email id", async function () {
+test("Login with invalid email id", async function () {
   await homePage.launchURL();
 
   await homePage.getHeaaderPage().navigateToLoginPage();

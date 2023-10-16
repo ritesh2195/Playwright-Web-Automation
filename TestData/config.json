@@ -1,5 +1,8 @@
 {
-    "url":"https://amazon.in",
+    "env":{
+        "url":"https://amazon.in"
+    },
     "email":"email",
-    "password":"password"
+    "password":"password",
+    "name":"ritesh"
 }
