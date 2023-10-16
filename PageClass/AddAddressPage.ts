@@ -3,7 +3,6 @@ import { BasePage } from "./BasePage";
 
 export class AddAddressPage extends BasePage{
 
-    //readonly page:Page;
     readonly addAddressLink:Locator
     readonly countryDropDown:Locator;
     readonly fullName:Locator;

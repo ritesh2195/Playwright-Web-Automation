@@ -5,8 +5,7 @@ const configData = JSON.parse(JSON.stringify(require('../TestData/config.json'))
 export class HomePage extends BasePage{
 
     readonly headerPage: HeaderPage
-    //readonly page:Page
-
+    
     constructor(page: Page){
 
         super(page);

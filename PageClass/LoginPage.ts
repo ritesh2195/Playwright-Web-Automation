@@ -3,7 +3,6 @@ import { BasePage } from "./BasePage";
 
 export class LoginPage extends BasePage{
 
-  //readonly page: Page;
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly continueButton: Locator;

@@ -3,7 +3,6 @@ import { BasePage } from './BasePage';
 
 export class HeaderPage extends BasePage{
 
-    //readonly page: Page;
     readonly signInLink:Locator;
     readonly accountListLine1:Locator;
     readonly searchTextBox:Locator;
