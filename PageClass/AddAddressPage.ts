@@ -1,8 +1,9 @@
 import { Locator, Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class AddAddressPage{
+export class AddAddressPage extends BasePage{
 
-    readonly page:Page;
+    //readonly page:Page;
     readonly addAddressLink:Locator
     readonly countryDropDown:Locator;
     readonly fullName:Locator;
@@ -17,6 +18,8 @@ export class AddAddressPage{
     readonly yesButton:Locator;
 
     constructor(page:Page){
+
+        super(page)
 
         this.addAddressLink = page.locator("//h2[contains(text(),'Add address')]")
 

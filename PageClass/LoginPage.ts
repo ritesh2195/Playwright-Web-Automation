@@ -1,7 +1,9 @@
 import { Locator, Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class LoginPage {
-  readonly page: Page;
+export class LoginPage extends BasePage{
+
+  //readonly page: Page;
   readonly emailInput: Locator;
   readonly passwordInput: Locator;
   readonly continueButton: Locator;
@@ -11,6 +13,9 @@ export class LoginPage {
   readonly alertMessage: Locator;
 
   constructor(page: Page) {
+
+    super(page);
+
     this.page = page;
 
     this.emailInput = page.locator("id=ap_email");

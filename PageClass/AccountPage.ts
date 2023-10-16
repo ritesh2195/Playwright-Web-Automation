@@ -1,11 +1,14 @@
 import { Locator, Page } from "@playwright/test";
+import { BasePage } from "./BasePage";
 
-export class AccountPage{
+export class AccountPage extends BasePage{
 
-    readonly page:Page;
+    //readonly page:Page;
     readonly addressLink:Locator;
 
     constructor(page:Page){
+
+        super(page)
 
         this.page = page;
 

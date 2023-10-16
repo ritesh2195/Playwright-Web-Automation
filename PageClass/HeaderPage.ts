@@ -1,8 +1,9 @@
 import { expect, type Locator, type Page } from '@playwright/test';
+import { BasePage } from './BasePage';
 
-export class HeaderPage{
+export class HeaderPage extends BasePage{
 
-    readonly page: Page;
+    //readonly page: Page;
     readonly signInLink:Locator;
     readonly accountListLine1:Locator;
     readonly searchTextBox:Locator;
@@ -10,6 +11,7 @@ export class HeaderPage{
 
     constructor(page: Page){
 
+        super(page);
         this.page = page
 
         this.signInLink = page.locator("id=nav-link-accountList");

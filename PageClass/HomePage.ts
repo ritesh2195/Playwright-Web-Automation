@@ -1,13 +1,15 @@
 import { expect, type Locator, type Page } from '@playwright/test';
 import { HeaderPage } from './HeaderPage';
+import { BasePage } from './BasePage';
 const configData = JSON.parse(JSON.stringify(require('../TestData/config.json')))
-export class HomePage{
+export class HomePage extends BasePage{
 
     readonly headerPage: HeaderPage
-    readonly page:Page
+    //readonly page:Page
 
     constructor(page: Page){
 
+        super(page);
         this.page = page
 
         this.headerPage = new HeaderPage(page)
