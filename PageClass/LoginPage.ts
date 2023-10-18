@@ -3,13 +3,13 @@ import { BasePage } from "./BasePage";
 
 export class LoginPage extends BasePage{
 
-  readonly emailInput: Locator;
-  readonly passwordInput: Locator;
-  readonly continueButton: Locator;
-  readonly signInButton: Locator;
-  readonly alertIcon: Locator;
-  readonly alertHeaderText: Locator;
-  readonly alertMessage: Locator;
+  private readonly emailInput: Locator;
+  private readonly passwordInput: Locator;
+  private readonly continueButton: Locator;
+  private readonly signInButton: Locator;
+  private readonly alertIcon: Locator;
+  private readonly alertHeaderText: Locator;
+  private readonly alertMessage: Locator;
 
   constructor(page: Page) {
 

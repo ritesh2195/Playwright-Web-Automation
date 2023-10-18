@@ -2,8 +2,7 @@ import { BrowserContext, Locator, Page } from "@playwright/test";
 
 export class BasePage{
 
-    public page:Page
-    readonly context:BrowserContext
+    protected page:Page
     
     constructor(page:Page){
 
@@ -17,13 +16,16 @@ export class BasePage{
 
     async switchToChildWindow(locator:Locator){
 
-        this.page = await this.context.newPage()
+        const [newWindow] = await Promise.all([
 
-        const [newPage] = await Promise.all([
-
-            this.context.waitForEvent('page'),
+            this.page.waitForEvent('popup'),
 
             locator.click()
         ])
+    }
+
+    async closeBrowser(){
+
+        await this.page.close();
     }
 }

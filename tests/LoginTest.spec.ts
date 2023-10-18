@@ -18,10 +18,11 @@ test.beforeEach(async function ({ page }) {
   homePage = new HomePage(page);
 
   loginPage = new LoginPage(page);
+
+  await homePage.launchURL();
 });
 
 test("Login Test with valid credential", async function () {
-  await homePage.launchURL();
 
   await homePage.getHeaaderPage().navigateToLoginPage();
 
@@ -35,7 +36,6 @@ test("Login Test with valid credential", async function () {
 });
 
 test("Login with invalid email id", async function () {
-  await homePage.launchURL();
 
   await homePage.getHeaaderPage().navigateToLoginPage();
 

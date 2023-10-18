@@ -3,7 +3,10 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "search":"npx playwright test tests/SearchProductTest.spec.ts --project chromium --headed",
+    "login":"npx playwright test tests/LoginTest.spec.ts --project chromium --headed"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

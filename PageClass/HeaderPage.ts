@@ -3,10 +3,10 @@ import { BasePage } from './BasePage';
 
 export class HeaderPage extends BasePage{
 
-    readonly signInLink:Locator;
-    readonly accountListLine1:Locator;
-    readonly searchTextBox:Locator;
-    readonly searchAutoListOption:Locator;
+    private readonly signInLink:Locator;
+    private readonly accountListLine1:Locator;
+    private readonly searchTextBox:Locator;
+    private readonly searchAutoListOption:Locator;
 
     constructor(page: Page){
 
@@ -40,6 +40,8 @@ export class HeaderPage extends BasePage{
     async searchProduct(product:string){
 
         await this.searchTextBox.fill(product)
+
+        await this.searchAutoListOption.nth(1).waitFor({timeout:3000})
     }
 
     async getAllAutoPopulatedList(){
@@ -58,6 +60,8 @@ export class HeaderPage extends BasePage{
 
     async selectProduct(productToSelect:string){
 
+
+
         const productOptions = await this.searchAutoListOption.all()
 
         for(const productOption of productOptions){
@@ -67,7 +71,7 @@ export class HeaderPage extends BasePage{
 
             if (productName.toLowerCase().includes(productToSelect.toLowerCase())){
 
-                productOption.click()
+                await productOption.click()
 
                 break;
             }
