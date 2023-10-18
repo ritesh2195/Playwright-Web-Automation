@@ -11,6 +11,7 @@ export class HeaderPage extends BasePage{
     constructor(page: Page){
 
         super(page);
+        
         this.page = page
 
         this.signInLink = page.locator("id=nav-link-accountList");

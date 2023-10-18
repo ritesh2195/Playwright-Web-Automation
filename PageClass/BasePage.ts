@@ -22,6 +22,10 @@ export class BasePage{
 
             locator.click()
         ])
+
+        await newWindow.waitForLoadState('domcontentloaded')
+
+        return newWindow;
     }
 
     async closeBrowser(){
