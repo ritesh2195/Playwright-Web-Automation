@@ -1,5 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
+import { LoginAlert } from "./ObjectInterface";
 
 export class LoginPage extends BasePage{
 
@@ -50,10 +51,10 @@ export class LoginPage extends BasePage{
     await this.signInButton.click();
   }
 
-  async verifyOnUnSuccessfulLoginAlert() {
+  async verifyOnUnSuccessfulLoginAlert(): Promise<LoginAlert> {
     await this.alertIcon.waitFor({ timeout: 2000 });
 
-    const obj = {
+    const obj:LoginAlert = {
       isAlrtIconDisplayed: await this.alertIcon.isVisible(),
       isAlertHeaderDisplayed: await this.alertHeaderText.isVisible(),
       isAlertMessage: await this.alertMessage.isVisible(),
