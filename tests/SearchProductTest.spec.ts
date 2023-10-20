@@ -29,9 +29,23 @@ test.only("search product functionality", async function () {
 
     await homePage.getHeaaderPage().selectProduct('badminton rackets')
 
+    const{name:resultPageProductName,price:resultPagePrice} = await resultPage.getFirstProductDetails()
+
     const detailsPage = await resultPage.clickOnFirstProduct()
 
-    console.log(await detailsPage.getPageTilt())
+    const {name:detilsPageProductName,price:detilsPageProductPrice} = await detailsPage.getProductDetailsOnDetailsPage()
+
+    expect(detilsPageProductName).toContain(resultPageProductName)
+
+    expect(resultPagePrice).toEqual(detilsPageProductPrice)
+
+    const{totalQuantity,cartIconCount} = await detailsPage.addProductToCard()
+
+    console.log(totalQuantity)
+
+    console.log("Cart count is "+cartIconCount)
+
+    expect(totalQuantity).toContain(cartIconCount)
 
 });
 
