@@ -1,6 +1,7 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
 import { NamePrice, QuantitySelected } from "./ObjectInterface";
+import { CartPage } from "./CartPage";
 
 export class ProductDetailsPage extends BasePage{
 
@@ -36,13 +37,18 @@ export class ProductDetailsPage extends BasePage{
 
     async getProductDetailsOnDetailsPage():Promise<NamePrice>{
 
-        const productPrice:string = await this.productPriceOnDetailsPage.textContent() || ''
+        let productPrice:string = await this.productPriceOnDetailsPage.textContent() || ''
 
         const productName:string = await this.productNameOnDetailsPage.textContent() || ''
 
+        if(productPrice.length>3){
+
+            productPrice = productPrice.replace(',','')
+        }
+
         const productDetails:NamePrice = {
 
-            price:productPrice,
+            price:parseInt(productPrice),
             name: productName
         }
 
@@ -55,7 +61,7 @@ export class ProductDetailsPage extends BasePage{
 
         try{
 
-            quantitySelected = await this.quantityDropDown.nth(0).getAttribute('value',{timeout:2000}) || ''
+            quantitySelected = await this.quantityDropDown.nth(0).getAttribute('value',{timeout:5000}) || ''
 
         } catch(error){
 
@@ -70,7 +76,7 @@ export class ProductDetailsPage extends BasePage{
 
         const productQuantitySelected:QuantitySelected = {
 
-            totalQuantity:quantitySelected,
+            totalQuantity:parseInt(quantitySelected),
             cartIconCount:countInCardIcon
         }
 
@@ -80,5 +86,7 @@ export class ProductDetailsPage extends BasePage{
     async navigateToCartPage(){
 
         await this.cartLink.click()
+
+        return new CartPage(this.page)
     }
 }

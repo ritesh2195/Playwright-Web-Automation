@@ -23,12 +23,17 @@ export class SearchResultPage extends BasePage{
 
         const firstProductName:string = await this.productName.nth(0).textContent() || ''
 
-        const firstProductPrice:string = await this.productPrice.nth(0).textContent() || ''
+        let firstProductPrice:string = await this.productPrice.nth(0).textContent() || ''
+
+        if(firstProductPrice.length>3){
+
+            firstProductPrice = firstProductPrice.replace(',','')
+        }
 
         const firstProductDetails:NamePrice = {
 
             name:firstProductName,
-            price:firstProductPrice
+            price:parseInt(firstProductPrice)
         }
 
         return firstProductDetails;

@@ -2,13 +2,13 @@ import { Interface } from "readline"
 
 export interface NamePrice{
 
-    price:string,
+    price:number,
     name:string
 }
 
 export interface QuantitySelected{
 
-    totalQuantity:string,
+    totalQuantity:number,
     cartIconCount:string
 }
 

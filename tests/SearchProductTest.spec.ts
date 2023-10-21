@@ -1,8 +1,4 @@
 import test, { expect } from '../src/utilities/Fixtures'
-import { HomePage } from "../src/PageClass/HomePage";
-import { LoginPage } from "../src/PageClass/LoginPage";
-import { SearchResultPage } from "../src/PageClass/SearchResultPage";
-import { ProductDetailsPage } from "../src/PageClass/ProductDetailsPage";
 
 test.only("search product functionality", async function ({homePage,resultPage}) {
 
@@ -29,12 +25,19 @@ test.only("search product functionality", async function ({homePage,resultPage})
 
     expect(resultPagePrice).toEqual(detilsPageProductPrice)
 
-    console.log(await detailsPage.getPageTilt())
-
     const{totalQuantity,cartIconCount} = await detailsPage.addProductToCart()
 
     expect(totalQuantity).toContain(cartIconCount)
 
-    await detailsPage.navigateToCartPage()
+    const cartPage = await detailsPage.navigateToCartPage()
 
+    let{name:productNameInCart, price:priceInCart} = await cartPage.getCartPageProductDetails()
+
+    console.log(detilsPageProductPrice)
+
+    console.log(detilsPageProductPrice, priceInCart)
+
+    console.log("total quantity is "+totalQuantity)
+
+    expect(detilsPageProductPrice*totalQuantity).toEqual(priceInCart)
 });
