@@ -2,12 +2,12 @@ import { ExcelReader } from '../src/utilities/ExcelReader';
 import test, { expect } from '../src/utilities/Fixtures'
 
 const configData = JSON.parse(
-  JSON.stringify(require("../TestData/config.json"))
+  JSON.stringify(require("../src/test-data/config.json"))
 );
 
 test("Login Test with valid credential", async function ({loginPage,homePage}) {
 
-  const reader:ExcelReader = new ExcelReader("TestData\\login.xlsx");
+  const reader:ExcelReader = new ExcelReader("src\\TestData\\login.xlsx");
 
   await reader.initialize();
 
@@ -26,7 +26,7 @@ test("Login Test with valid credential", async function ({loginPage,homePage}) {
 
 test.only("Login with invalid email id", async function ({loginPage,homePage}) {
 
-  const reader:ExcelReader = new ExcelReader("TestData\\login.xlsx");
+  const reader:ExcelReader = new ExcelReader("src\\test-data\\login.xlsx");
 
   await reader.initialize();
 
