@@ -1,5 +1,5 @@
+import { ExcelReader } from '../src/utilities/ExcelReader';
 import test, { expect } from '../src/utilities/Fixtures'
-import { ExcelReader } from "../Utilities/ExcelReader";
 
 const configData = JSON.parse(
   JSON.stringify(require("../TestData/config.json"))
