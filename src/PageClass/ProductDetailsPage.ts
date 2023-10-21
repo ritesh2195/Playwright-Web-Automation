@@ -55,7 +55,7 @@ export class ProductDetailsPage extends BasePage{
 
         try{
 
-            quantitySelected = await this.quantityDropDown.nth(0).getAttribute('value',{timeout:5000}) || ''
+            quantitySelected = await this.quantityDropDown.nth(0).getAttribute('value',{timeout:2000}) || ''
 
         } catch(error){
 
@@ -75,5 +75,10 @@ export class ProductDetailsPage extends BasePage{
         }
 
         return productQuantitySelected;
-}
+    }
+
+    async navigateToCartPage(){
+
+        await this.cartLink.click()
+    }
 }

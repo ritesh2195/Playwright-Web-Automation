@@ -35,4 +35,6 @@ test.only("search product functionality", async function ({homePage,resultPage})
 
     expect(totalQuantity).toContain(cartIconCount)
 
+    await detailsPage.navigateToCartPage()
+
 });
