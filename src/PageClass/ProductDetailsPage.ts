@@ -66,8 +66,6 @@ export class ProductDetailsPage extends BasePage{
             quantitySelected = 1
         }
 
-        await this.page.pause()
-
         await this.addToCartButton.click()
 
         await this.productCountInCartIcon.waitFor({timeout:6000})
