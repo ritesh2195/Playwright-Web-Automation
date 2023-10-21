@@ -24,9 +24,11 @@ test("Login Test with valid credential", async function ({loginPage,homePage}) {
   );
 });
 
-test("Login with invalid email id", async function ({loginPage,homePage}) {
+test.only("Login with invalid email id", async function ({loginPage,homePage}) {
 
   const reader:ExcelReader = new ExcelReader("TestData\\login.xlsx");
+
+  await reader.initialize();
 
   homePage.launchURL()
 

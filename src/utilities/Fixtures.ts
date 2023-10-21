@@ -1,11 +1,11 @@
 import { test as baseTest } from "@playwright/test";
-import { LoginPage } from "../../PageClass/LoginPage";
-import { AccountPage } from "../../PageClass/AccountPage";
-import { AddAddressPage } from "../../PageClass/AddAddressPage";
-import { BasePage } from "../../PageClass/BasePage";
-import { HomePage } from "../../PageClass/HomePage";
-import { ProductDetailsPage } from "../../PageClass/ProductDetailsPage";
-import { SearchResultPage } from "../../PageClass/SearchResultPage";
+import { LoginPage } from "../PageClass/LoginPage";
+import { AccountPage } from "../PageClass/AccountPage";
+import { AddAddressPage } from "../PageClass/AddAddressPage";
+import { BasePage } from "../PageClass/BasePage";
+import { HomePage } from "../PageClass/HomePage";
+import { ProductDetailsPage } from "../PageClass/ProductDetailsPage";
+import { SearchResultPage } from "../PageClass/SearchResultPage";
 
 const test = baseTest.extend<{
     loginPage:LoginPage

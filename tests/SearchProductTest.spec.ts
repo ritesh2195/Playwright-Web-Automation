@@ -1,8 +1,8 @@
 import test, { expect } from '../src/utilities/Fixtures'
-import { HomePage } from "../PageClass/HomePage";
-import { LoginPage } from "../PageClass/LoginPage";
-import { SearchResultPage } from "../PageClass/SearchResultPage";
-import { ProductDetailsPage } from "../PageClass/ProductDetailsPage";
+import { HomePage } from "../src/PageClass/HomePage";
+import { LoginPage } from "../src/PageClass/LoginPage";
+import { SearchResultPage } from "../src/PageClass/SearchResultPage";
+import { ProductDetailsPage } from "../src/PageClass/ProductDetailsPage";
 
 test.only("search product functionality", async function ({homePage,resultPage}) {
 
