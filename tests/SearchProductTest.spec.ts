@@ -29,11 +29,9 @@ test.only("search product functionality", async function ({homePage,resultPage})
 
     expect(resultPagePrice).toEqual(detilsPageProductPrice)
 
-    const{totalQuantity,cartIconCount} = await detailsPage.addProductToCard()
+    console.log(await detailsPage.getPageTilt())
 
-    console.log(totalQuantity)
-
-    console.log("Cart count is "+cartIconCount)
+    const{totalQuantity,cartIconCount} = await detailsPage.addProductToCart()
 
     expect(totalQuantity).toContain(cartIconCount)
 

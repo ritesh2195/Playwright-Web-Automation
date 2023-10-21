@@ -22,7 +22,7 @@ export class ProductDetailsPage extends BasePage{
 
         this.productPriceOnDetailsPage = page.locator("//div[@id='corePriceDisplay_desktop_feature_div']//span[contains(@class,'a-price-whole')]").nth(0)
 
-        this.addToCartButton = page.getByRole('link', { name: 'Add to Cart' })
+        this.addToCartButton = page.locator('id=add-to-cart-button')
 
         this.buyNowButton = page.locator('id=buy-now-button')
 
@@ -49,11 +49,22 @@ export class ProductDetailsPage extends BasePage{
         return productDetails;
     }
 
-    async addProductToCard():Promise<QuantitySelected>{
+    async addProductToCart():Promise<QuantitySelected>{
 
-        const quantitySelected:string = await this.quantityDropDown.nth(0).getAttribute('value') || ''
+        let quantitySelected:string;
+
+        try{
+
+            quantitySelected = await this.quantityDropDown.nth(0).getAttribute('value',{timeout:5000}) || ''
+
+        } catch(error){
+
+            quantitySelected = '1'
+        }
 
         await this.addToCartButton.click()
+
+        await this.productCountInCartIcon.waitFor({timeout:6000})
 
         const countInCardIcon:string = await this.productCountInCartIcon.textContent() || ''
 
@@ -62,8 +73,6 @@ export class ProductDetailsPage extends BasePage{
             totalQuantity:quantitySelected,
             cartIconCount:countInCardIcon
         }
-
-        await this.productCountInCartIcon.waitFor({timeout:10000})
 
         return productQuantitySelected;
 }
