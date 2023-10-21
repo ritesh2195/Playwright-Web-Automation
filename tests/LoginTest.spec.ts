@@ -1,28 +1,17 @@
-import test, { expect } from "@playwright/test";
-import { HomePage } from "../PageClass/HomePage";
-import { LoginPage } from "../PageClass/LoginPage";
+import test, { expect } from '../src/utilities/Fixtures'
 import { ExcelReader } from "../Utilities/ExcelReader";
+
 const configData = JSON.parse(
   JSON.stringify(require("../TestData/config.json"))
 );
 
-let homePage: HomePage;
-let loginPage: LoginPage;
-let reader: ExcelReader;
+test("Login Test with valid credential", async function ({loginPage,homePage}) {
 
-test.beforeEach(async function ({ page }) {
-  reader = new ExcelReader("TestData\\login.xlsx");
+  const reader:ExcelReader = new ExcelReader("TestData\\login.xlsx");
 
   await reader.initialize();
 
-  homePage = new HomePage(page);
-
-  loginPage = new LoginPage(page);
-
   await homePage.launchURL();
-});
-
-test("Login Test with valid credential", async function () {
 
   await homePage.getHeaaderPage().navigateToLoginPage();
 
@@ -35,7 +24,11 @@ test("Login Test with valid credential", async function () {
   );
 });
 
-test("Login with invalid email id", async function () {
+test("Login with invalid email id", async function ({loginPage,homePage}) {
+
+  const reader:ExcelReader = new ExcelReader("TestData\\login.xlsx");
+
+  homePage.launchURL()
 
   await homePage.getHeaaderPage().navigateToLoginPage();
 

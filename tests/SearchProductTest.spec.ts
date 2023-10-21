@@ -1,20 +1,10 @@
-import test, { expect } from "@playwright/test";
+import test, { expect } from '../src/utilities/Fixtures'
 import { HomePage } from "../PageClass/HomePage";
 import { LoginPage } from "../PageClass/LoginPage";
 import { SearchResultPage } from "../PageClass/SearchResultPage";
 import { ProductDetailsPage } from "../PageClass/ProductDetailsPage";
 
-let homePage: HomePage;
-let resultPage:SearchResultPage
-
-test.beforeEach(async function({page}){
-
-    homePage = new HomePage(page)
-
-    resultPage = new SearchResultPage(page)
-})
-
-test.only("search product functionality", async function () {
+test.only("search product functionality", async function ({homePage,resultPage}) {
 
     await homePage.launchURL()
 
@@ -48,8 +38,3 @@ test.only("search product functionality", async function () {
     expect(totalQuantity).toContain(cartIconCount)
 
 });
-
-test.afterEach(async function(){
-
-    await homePage.closeBrowser()
-})
