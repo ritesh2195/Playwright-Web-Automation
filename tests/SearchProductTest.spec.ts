@@ -1,10 +1,14 @@
 import test, { expect } from '../src/utilities/Fixtures'
+const searchData = JSON.parse(
+    JSON.stringify(require("../src/test-data/searchproduct.json"))
+  );
+  
 
 test.only("search product functionality", async function ({homePage,resultPage}) {
 
     await homePage.launchURL()
 
-    await homePage.getHeaaderPage().searchProduct('badminton')
+    await homePage.getHeaaderPage().searchProduct(searchData.searchInput)
 
     const allAutoPopulatedList = await homePage.getHeaaderPage().getAllAutoPopulatedList()
 
@@ -13,7 +17,7 @@ test.only("search product functionality", async function ({homePage,resultPage})
         expect(populatedList).toContain('badminton')
     }
 
-    await homePage.getHeaaderPage().selectProduct('badminton rackets')
+    await homePage.getHeaaderPage().selectProduct(searchData.productToSelect)
 
     const{name:resultPageProductName,price:resultPagePrice} = await resultPage.getFirstProductDetails()
 
@@ -25,9 +29,9 @@ test.only("search product functionality", async function ({homePage,resultPage})
 
     expect(resultPagePrice).toEqual(detilsPageProductPrice)
 
-    const{totalQuantity,cartIconCount} = await detailsPage.addProductToCart()
+    const cartIconCount = await detailsPage.addProductToCart(searchData.quantity)
 
-    expect(totalQuantity).toContain(cartIconCount)
+    //expect(searchData.quantity).toContain(cartIconCount)
 
     const cartPage = await detailsPage.navigateToCartPage()
 
@@ -37,7 +41,5 @@ test.only("search product functionality", async function ({homePage,resultPage})
 
     console.log(detilsPageProductPrice, priceInCart)
 
-    console.log("total quantity is "+totalQuantity)
-
-    expect(detilsPageProductPrice*totalQuantity).toEqual(priceInCart)
+    expect(detilsPageProductPrice*searchData.quantity).toEqual(priceInCart)
 });

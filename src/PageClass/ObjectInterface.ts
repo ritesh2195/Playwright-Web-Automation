@@ -6,12 +6,6 @@ export interface NamePrice{
     name:string
 }
 
-export interface QuantitySelected{
-
-    totalQuantity:number,
-    cartIconCount:string
-}
-
 export interface LoginAlert{
 
     isAlrtIconDisplayed:boolean,

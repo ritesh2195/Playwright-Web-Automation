@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
-import { NamePrice, QuantitySelected } from "./ObjectInterface";
+import { NamePrice } from "./ObjectInterface";
 import { CartPage } from "./CartPage";
 
 export class ProductDetailsPage extends BasePage{
@@ -55,18 +55,18 @@ export class ProductDetailsPage extends BasePage{
         return productDetails;
     }
 
-    async addProductToCart():Promise<QuantitySelected>{
-
-        let quantitySelected:string;
+    async addProductToCart(quantitySelected:number):Promise<number>{
 
         try{
 
-            quantitySelected = await this.quantityDropDown.nth(0).getAttribute('value',{timeout:5000}) || ''
+            await this.quantityDropDown.selectOption(quantitySelected.toString(),{timeout:5000})
 
         } catch(error){
 
-            quantitySelected = '1'
+            quantitySelected = 1
         }
+
+        await this.page.pause()
 
         await this.addToCartButton.click()
 
@@ -74,13 +74,7 @@ export class ProductDetailsPage extends BasePage{
 
         const countInCardIcon:string = await this.productCountInCartIcon.textContent() || ''
 
-        const productQuantitySelected:QuantitySelected = {
-
-            totalQuantity:parseInt(quantitySelected),
-            cartIconCount:countInCardIcon
-        }
-
-        return productQuantitySelected;
+        return parseInt(countInCardIcon);
     }
 
     async navigateToCartPage(){
