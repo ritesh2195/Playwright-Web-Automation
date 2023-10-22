@@ -31,15 +31,13 @@ test.only("search product functionality", async function ({homePage,resultPage})
 
     const cartIconCount = await detailsPage.addProductToCart(searchData.quantity)
 
-    //expect(searchData.quantity).toContain(cartIconCount)
+    expect(searchData.quantity).toContain(cartIconCount)
 
     const cartPage = await detailsPage.navigateToCartPage()
 
     let{name:productNameInCart, price:priceInCart} = await cartPage.getCartPageProductDetails()
 
-    console.log(detilsPageProductPrice)
-
-    console.log(detilsPageProductPrice, priceInCart)
-
     expect(detilsPageProductPrice*searchData.quantity).toEqual(priceInCart)
+
+    expect(productNameInCart.trim()).toContain(detilsPageProductName.trim())
 });

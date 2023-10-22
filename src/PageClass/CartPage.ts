@@ -20,10 +20,19 @@ export class CartPage extends BasePage{
 
     async getCartPageProductDetails():Promise<NamePrice>{
 
+        const cartProductName:string = await this.cartPageProductName.textContent() || ''
+
+        let cartProductPrice:string = await this.cartTotalPrice.textContent() || ''
+
+        if(cartProductPrice.length>3){
+
+            cartProductPrice = cartProductPrice.replace(',','')
+        }
+
         const details:NamePrice = {
 
-            name:await this.cartPageProductName.textContent() || '',
-            price: await this.cartPageProductName.textContent() || ''
+            name:cartProductName,
+            price: parseInt(cartProductPrice)
         }
 
         return details;
