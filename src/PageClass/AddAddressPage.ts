@@ -12,7 +12,6 @@ export class AddAddressPage extends BasePage{
     private readonly townCity:Locator;
     private readonly stateDropDown:Locator;
     private readonly addAddressButton:Locator;
-    private readonly confirmationMessage:Locator;
     private readonly yesButton:Locator;
     private readonly removeButton:Locator
     private readonly reviewAddressText:Locator
@@ -38,8 +37,6 @@ export class AddAddressPage extends BasePage{
         this.stateDropDown = page.locator("//select[contains(@id,'address-ui-widgets-enterAddressStateOrRegion')]")
 
         this.addAddressButton = page.locator("//span[text()='Add address']//preceding-sibling::input")
-
-        this.confirmationMessage = page.locator("//h4[@class='a-alert-heading']")
 
         this.removeButton = page.locator("//div[contains(@id,'edit-address')]//a[text()='Remove']")
 
@@ -120,10 +117,5 @@ export class AddAddressPage extends BasePage{
 
             await this.addAddressButton.click()
         }
-    }
-
-    async getConfirmationMessage():Promise<string>{
-
-        return await this.confirmationMessage.textContent() || ''
     }
 }

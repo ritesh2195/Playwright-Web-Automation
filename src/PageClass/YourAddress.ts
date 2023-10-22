@@ -7,6 +7,7 @@ export class YourAddress extends BasePage{
     private readonly removeButton:Locator
     private readonly userFullName:Promise<ElementHandle<SVGElement | HTMLElement>[]>;
     private readonly yesButton:Locator
+    private readonly confirmationMessage:Locator
 
     constructor(page:Page){
 
@@ -20,33 +21,43 @@ export class YourAddress extends BasePage{
 
         this.userFullName = page.$$("//div[contains(@class,'a-section address-section')]//span[@id='address-ui-widgets-FullName']")
 
-        this.yesButton = page.locator("id=deleteAddressModal-2-submit-btn")
+        this.yesButton = page.locator("id=deleteAddressModal-1-submit-btn")
+
+        this.confirmationMessage = page.locator("//h4[@class='a-alert-heading']")
     }
 
     async clickAddAddressLink(){
 
         await this.addAddressLink.click()
 
-        await this.page.waitForLoadState('domcontentloaded')
+        await this.page.waitForLoadState('load')
     }
 
     async deleteAddress(fullName: string) {
 
         const userFullNames: ElementHandle<SVGElement | HTMLElement>[] = await this.userFullName;
-      
-        for (const element of userFullNames) {
 
-          const name: string = await element.textContent() || '';
-      
-          if (name.includes(fullName)) {
+        for(let i=0;i<userFullNames.length; i++){
 
-            await this.removeButton.click();
+          const name: string = await userFullNames[i].textContent() || '';
 
-            await this.yesButton.click();
+            if (name.includes(fullName)) {
 
-            break;
-          }
+              await this.removeButton.nth(i).click();
+
+              await this.yesButton.click();
+
+              await this.page.waitForLoadState('load')
+
+              break;
+          
         }
       }
       
-}
+    }
+
+    async getConfirmationMessage():Promise<string>{
+
+      return await this.confirmationMessage.textContent() || ''
+  }
+  }

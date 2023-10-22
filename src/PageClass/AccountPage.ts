@@ -18,5 +18,7 @@ export class AccountPage extends BasePage{
     async navigateToAddressPage(){
 
         await this.addressLink.click()
+
+        await this.page.waitForLoadState('load')
     }
 }

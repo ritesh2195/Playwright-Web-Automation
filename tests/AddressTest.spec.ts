@@ -6,25 +6,27 @@ const configData = JSON.parse(
 
 const addressData = JSON.parse(
     JSON.stringify(require("../src/test-data/address.json"))
-  );  
+  );
 
-test('Address functionality validation', async function({page,homePage,loginPage,accountPage,yourAddress,addAddressPage}){
+test.beforeEach(async function({homePage,loginPage,accountPage}){
 
-    await homePage.launchURL()
+  await homePage.launchURL()
 
-    await homePage.getHeaaderPage().navigateToLoginPage()
+  await homePage.getHeaaderPage().navigateToLoginPage()
 
-    await loginPage.enterEmailAndContinue(configData.email)
+  await loginPage.enterEmailAndContinue(configData.email)
 
-    await loginPage.enterPasswordAndSignIn(configData.password)
+  await loginPage.enterPasswordAndSignIn(configData.password)
 
-    await homePage.getHeaaderPage().navigateToAccountPage()
+  await homePage.getHeaaderPage().navigateToAccountPage()
 
-    await accountPage.navigateToAddressPage()
+  await accountPage.navigateToAddressPage()
+
+})  
+
+test('Address functionality validation', async function({yourAddress,addAddressPage}){
 
     await yourAddress.clickAddAddressLink()
-
-    //await page.pause()
 
     await addAddressPage.enterPinCode(addressData.pinCode);
 
@@ -32,11 +34,11 @@ test('Address functionality validation', async function({page,homePage,loginPage
 
     const city:string = await addAddressPage.getCityName()
 
-    expect(addressData.city).toEqual(city)
+    expect(city).toEqual(addressData.city)
 
     const state:string = await addAddressPage.getStateName()
 
-    expect(addressData.state).toEqual(state)
+    expect(state).toEqual(addressData.state)
 
     await addAddressPage.enterFullName(addressData.fullName)
 
@@ -46,9 +48,15 @@ test('Address functionality validation', async function({page,homePage,loginPage
 
     await addAddressPage.enterStreetAddress(addressData.area)
 
-    await page.pause()
-
     await addAddressPage.clickAddAddressButton()
 
-    expect('Address saved').toEqual(await addAddressPage.getConfirmationMessage())
+    expect('Address saved').toEqual(await yourAddress.getConfirmationMessage())
+})
+
+test('Delete address validation',async function({yourAddress}){
+
+  await yourAddress.deleteAddress(addressData.fullName)
+
+  expect(await yourAddress.getConfirmationMessage()).toContain('Address deleted')
+
 })
