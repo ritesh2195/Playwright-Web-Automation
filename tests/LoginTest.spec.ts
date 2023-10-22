@@ -5,15 +5,13 @@ const configData = JSON.parse(
   JSON.stringify(require("../src/test-data/config.json"))
 );
 
-test("Login Test with valid credential", async function ({loginPage,homePage}) {
-
-  const reader:ExcelReader = new ExcelReader("src\\TestData\\login.xlsx");
-
-  await reader.initialize();
-
+test.beforeEach(async function({homePage,page}){
   await homePage.launchURL();
 
   await homePage.getHeaaderPage().navigateToLoginPage();
+})
+
+test("Login Test with valid credential", async function ({loginPage,homePage}) {
 
   await loginPage.enterEmailAndContinue(configData.email);
 
@@ -24,15 +22,11 @@ test("Login Test with valid credential", async function ({loginPage,homePage}) {
   );
 });
 
-test.only("Login with invalid email id", async function ({loginPage,homePage}) {
+test("Login with invalid email id", async function ({loginPage}) {
 
-  const reader:ExcelReader = new ExcelReader("src\\test-data\\login.xlsx");
+   const reader:ExcelReader = new ExcelReader("src\\test-data\\login.xlsx");
 
-  await reader.initialize();
-
-  homePage.launchURL()
-
-  await homePage.getHeaaderPage().navigateToLoginPage();
+   await reader.initialize();
 
   await loginPage.enterEmailAndContinue(
     reader.getCellData("Sheet1", "Email", 2)
