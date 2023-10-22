@@ -41,8 +41,6 @@ export class AddAddressPage extends BasePage{
 
         this.confirmationMessage = page.locator("//h4[@class='a-alert-heading']")
 
-        this.yesButton = page.locator("id=deleteAddressModal-2-submit-btn")
-
         this.removeButton = page.locator("//div[contains(@id,'edit-address')]//a[text()='Remove']")
 
         this.reviewAddressText = page.locator('"Review your address"')
