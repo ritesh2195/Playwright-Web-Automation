@@ -3,7 +3,7 @@ import { BasePage } from "./BasePage";
 
 export class AccountPage extends BasePage{
 
-    readonly addressLink:Locator;
+    private readonly addressLink:Locator;
 
     constructor(page:Page){
 

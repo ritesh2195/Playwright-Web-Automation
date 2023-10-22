@@ -6,6 +6,7 @@ import { BasePage } from "../PageClass/BasePage";
 import { HomePage } from "../PageClass/HomePage";
 import { ProductDetailsPage } from "../PageClass/ProductDetailsPage";
 import { SearchResultPage } from "../PageClass/SearchResultPage";
+import { YourAddress } from "../PageClass/YourAddress";
 
 const test = baseTest.extend<{
     loginPage:LoginPage
@@ -15,6 +16,7 @@ const test = baseTest.extend<{
     homePage:HomePage
     detailsPage:ProductDetailsPage
     resultPage:SearchResultPage
+    yourAddress:YourAddress
 }>({
     
     basePage: async ({ page }, use) => {
@@ -37,6 +39,9 @@ const test = baseTest.extend<{
     },
     resultPage: async ({ page }, use) => {
         await use(new SearchResultPage(page));
+    },
+    yourAddress:async ({page}, use)=>{
+        await use(new YourAddress(page));
     }
 })
 

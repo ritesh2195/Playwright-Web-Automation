@@ -9,6 +9,12 @@ export class BasePage{
         this.page = page
     }
 
+    sleep(ms: number): Promise<void> {
+        return new Promise(resolve => {
+          setTimeout(resolve, ms);
+        });
+      }
+
     async getPageTilt(): Promise<string>{
 
         return await this.page.title() || ''
