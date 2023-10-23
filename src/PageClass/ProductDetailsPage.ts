@@ -68,6 +68,8 @@ export class ProductDetailsPage extends BasePage{
 
         await this.addToCartButton.click()
 
+        await this.page.waitForLoadState('load')
+
         await this.productCountInCartIcon.waitFor({timeout:6000})
 
         const countInCardIcon:string = await this.productCountInCartIcon.textContent() || ''
