@@ -4,16 +4,20 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "search":"npx playwright test tests/SearchProductTest.spec.ts --project chromium --headed",
-    "login":"npx playwright test tests/LoginTest.spec.ts --project chromium --headed",
-    "address":"npx playwright test tests/AddressTest.spec.ts --project chromium --headed"
+    "search": "npx playwright test tests/SearchProductTest.spec.ts --project chromium --headed",
+    "login": "npx playwright test tests/LoginTest.spec.ts --project chromium --headed",
+    "address": "npx playwright test tests/AddressTest.spec.ts --project chromium --headed",
+    "generate-report":"npx allure generate ./allure-results --clean",
+    "open-report":"npx allure open ./allure-report"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "@playwright/test": "^1.38.0",
-    "@types/node": "^20.6.1"
+    "@types/node": "^20.6.1",
+    "allure-commandline": "^2.24.1",
+    "allure-playwright": "2.9.2"
   },
   "dependencies": {
     "node-xlsx": "^0.23.0"
