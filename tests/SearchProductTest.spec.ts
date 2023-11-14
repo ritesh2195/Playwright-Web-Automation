@@ -31,7 +31,7 @@ test("search product functionality", async function ({homePage,resultPage}) {
 
     const cartIconCount = await detailsPage.addProductToCart(searchData.quantity)
 
-    expect(searchData.quantity).toContain(cartIconCount)
+    expect(searchData.quantity.toString()).toContain(cartIconCount.toString())
 
     const cartPage = await detailsPage.navigateToCartPage()
 
