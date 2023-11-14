@@ -4,7 +4,7 @@ const searchData = JSON.parse(
   );
   
 
-test.only("search product functionality", async function ({homePage,resultPage}) {
+test("search product functionality", async function ({homePage,resultPage}) {
 
     await homePage.launchURL()
 
