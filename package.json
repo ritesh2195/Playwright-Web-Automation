@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "search": "npx playwright test tests/SearchProductTest.spec.ts --project chromium --headed",
-    "login": "npx playwright test tests/LoginTest.spec.ts --project chromium --headed",
-    "address": "npx playwright test tests/AddressTest.spec.ts --project chromium --headed",
+    "search": "npx playwright test tests/SearchProductTest.spec.ts --project chromium",
+    "login": "npx playwright test tests/LoginTest.spec.ts --project chromium",
+    "address": "npx playwright test tests/AddressTest.spec.ts --project chromium",
     "generate-report":"npx allure generate ./allure-results --clean",
     "open-report":"npx allure open ./allure-report"
   },
