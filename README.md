@@ -26,3 +26,5 @@ This project provides automated testing and interaction with Amazon's website us
 ## Usage
 1. Compile TypeScript files:
 2. Run the compiled JavaScript files:
+3. To generate and view Allure reports, run:npm run allure-report
+
