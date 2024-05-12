@@ -1,25 +1,28 @@
-# Automated Amazon Testing with Playwright (TypeScript)
+# Amazon Automation with Playwright and TypeScript
 
-This project showcases automated testing of Amazon's web functionalities using Playwright with TypeScript.
+## Overview
+This project provides automated testing and interaction with Amazon's website using Playwright and TypeScript. The automation covers functionalities like login, address management, product search, and adding items to the cart.
 
 ## Features
-
-- Automated login to Amazon
-- Adding and deleting addresses
-- Searching for products
-- Adding products to the shopping cart
+- **Login Automation:** Automates the login process to Amazon using provided credentials.
+- **Address Management:** Allows adding and deleting addresses associated with the user's account.
+- **Product Search:** Conducts product searches on Amazon based on specified criteria.
+- **Add to Cart:** Adds selected items to the shopping cart.
 
 ## Prerequisites
-
 - Node.js installed
-- Git installed
-- Access to Amazon's website
-- TypeScript installed globally (`npm install -g typescript`)
-- IDE (like Visual Studio Code) for editing and running the tests
+- TypeScript installed
+- Playwright installed
 
 ## Setup
+1. Clone the repository:
+2. Navigate to the project directory:
+3. Install dependencies:
 
-1. Clone this repository to your local machine:
+## Configuration
+1. Provide your Amazon login credentials in the appropriate configuration file.
+2. Ensure the necessary WebDriver setup is correctly configured for Playwright.
 
-```bash
-git clone https://github.com/ritesh2195/Playwright-TypeScript.git
+## Usage
+1. Compile TypeScript files:
+2. Run the compiled JavaScript files:
