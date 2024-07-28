@@ -1,7 +1,7 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
-import { NamePrice } from "./ObjectInterface";
 import { CartPage } from "./CartPage";
+import { NamePrice } from "../models/page-interface";
 
 export class ProductDetailsPage extends BasePage{
 
