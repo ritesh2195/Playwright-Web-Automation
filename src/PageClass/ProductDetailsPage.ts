@@ -57,14 +57,7 @@ export class ProductDetailsPage extends BasePage{
 
     async addProductToCart(quantitySelected:number):Promise<number>{
 
-        try{
-
-            await this.quantityDropDown.selectOption(quantitySelected.toString(),{timeout:5000})
-
-        } catch(error){
-
-            quantitySelected = 1
-        }
+        await this.quantityDropDown.selectOption(quantitySelected.toString(),{timeout:5000})
 
         await this.addToCartButton.click()
 
