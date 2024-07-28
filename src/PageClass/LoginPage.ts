@@ -1,6 +1,6 @@
 import { Locator, Page } from "@playwright/test";
 import { BasePage } from "./BasePage";
-import { LoginAlert } from "./ObjectInterface";
+import { LoginAlert } from "../models/page-interface";
 
 export class LoginPage extends BasePage{
 
