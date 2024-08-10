@@ -1,0 +1,7 @@
+userName: your_username
+accessKey: accessKey
+platforms:
+  - os: Windows
+    osVersion: 11
+    browserName: chrome
+    browserVersion: latest
