@@ -1,4 +1,4 @@
-import test, { expect } from "../src/utilities/fixture-util";
+import test, { expect } from "../src/utils/fixture-util";
 
 const configData = JSON.parse(
     JSON.stringify(require("../src/test-data/login.json"))
