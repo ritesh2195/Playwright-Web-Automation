@@ -1,44 +1,44 @@
-import test, { expect } from "../src/utils/fixture-util";
+import test, { expect } from "../src/fixtures/page-fixtures";
 
-const searchData = JSON.parse(
-    JSON.stringify(require("../src/test-data/searchproduct.json"))
-  );
-  
+const searchData = require("../src/test-data/search-product.json");
 
-test("search product functionality", async function ({homePage,resultPage}) {
+test.describe('Search Product Tests', () => {
 
-    await homePage.launchURL()
+  test("search product functionality", async function ({homePage, headerPage, resultPage}) {
 
-    await homePage.getHeaaderPage().searchProduct(searchData.searchInput)
+      await homePage.launchURL()
 
-    const allAutoPopulatedList = await homePage.getHeaaderPage().getAllAutoPopulatedList()
+      await headerPage.searchProduct(searchData.searchInput)
 
-    for(const populatedList of allAutoPopulatedList){
+      const allAutoPopulatedList = await headerPage.getAllAutoPopulatedList()
 
-        expect(populatedList).toContain('badminton')
-    }
+      for(const populatedList of allAutoPopulatedList){
 
-    await homePage.getHeaaderPage().selectProduct(searchData.productToSelect)
+          expect(populatedList).toContain('badminton')
+      }
 
-    const{name:resultPageProductName,price:resultPagePrice} = await resultPage.getFirstProductDetails()
+      await headerPage.selectProduct(searchData.productToSelect)
 
-    const detailsPage = await resultPage.clickOnFirstProduct()
+      const{name:resultPageProductName,price:resultPagePrice} = await resultPage.getFirstProductDetails()
 
-    const {name:detilsPageProductName,price:detilsPageProductPrice} = await detailsPage.getProductDetailsOnDetailsPage()
+      const detailsPage = await resultPage.clickOnFirstProduct()
 
-    expect(detilsPageProductName).toContain(resultPageProductName)
+      const {name:detilsPageProductName,price:detilsPageProductPrice} = await detailsPage.getProductDetailsOnDetailsPage()
 
-    expect(resultPagePrice).toEqual(detilsPageProductPrice)
+      expect(detilsPageProductName).toContain(resultPageProductName)
 
-    const cartIconCount = await detailsPage.addProductToCart(searchData.quantity)
+      expect(resultPagePrice).toEqual(detilsPageProductPrice)
 
-    expect(searchData.quantity.toString()).toContain(cartIconCount.toString())
+      const cartIconCount = await detailsPage.addProductToCart(searchData.quantity)
 
-    const cartPage = await detailsPage.navigateToCartPage()
+      expect(searchData.quantity.toString()).toContain(cartIconCount.toString())
 
-    let{name:productNameInCart, price:priceInCart} = await cartPage.getCartPageProductDetails()
+      const cartPage = await detailsPage.navigateToCartPage()
 
-    expect(detilsPageProductPrice*searchData.quantity).toEqual(priceInCart)
+      let{name:productNameInCart, price:priceInCart} = await cartPage.getCartPageProductDetails()
 
-    expect(productNameInCart.trim()).toContain(detilsPageProductName.trim())
+      expect(detilsPageProductPrice*searchData.quantity).toEqual(priceInCart)
+
+      expect(productNameInCart.trim()).toContain(detilsPageProductName.trim())
+  });
 });

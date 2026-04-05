@@ -10,42 +10,33 @@ export class AddAddressPage extends BasePage{
     private readonly flatHouse:Locator;
     private readonly streetAddress:Locator;
     private readonly townCity:Locator;
-    private readonly stateDropDown:Locator;
     private readonly addAddressButton:Locator;
-    private readonly yesButton:Locator;
-    private readonly removeButton:Locator
     private readonly reviewAddressText:Locator
 
     constructor(page:Page){
 
         super(page)
 
-        this.countryDropDown = page.locator("//select[contains(@id,'countryCode-dropdown')]")
+        this.countryDropDown = page.locator('select[id*="countryCode-dropdown"]')
 
-        this.fullName = page.locator("id=address-ui-widgets-enterAddressFullName")
+        this.fullName = page.locator('#address-ui-widgets-enterAddressFullName')
 
-        this.mobileNumber = page.locator("id=address-ui-widgets-enterAddressPhoneNumber")
+        this.mobileNumber = page.locator('#address-ui-widgets-enterAddressPhoneNumber')
 
-        this.pinCode = page.locator("id=address-ui-widgets-enterAddressPostalCode")
+        this.pinCode = page.locator('#address-ui-widgets-enterAddressPostalCode')
 
-        this.flatHouse = page.locator("id=address-ui-widgets-enterAddressLine1")
+        this.flatHouse = page.locator('#address-ui-widgets-enterAddressLine1')
 
-        this.streetAddress = page.locator("id=address-ui-widgets-enterAddressLine2")
+        this.streetAddress = page.locator('#address-ui-widgets-enterAddressLine2')
 
-        this.townCity = page.locator("//input[@id='address-ui-widgets-enterAddressCity']")
+        this.townCity = page.locator('#address-ui-widgets-enterAddressCity')
 
-        this.stateDropDown = page.locator("//select[contains(@id,'address-ui-widgets-enterAddressStateOrRegion')]")
+        this.addAddressButton = page.getByRole('button', { name: 'Add address' })
 
-        this.addAddressButton = page.locator("//span[text()='Add address']//preceding-sibling::input")
-
-        this.removeButton = page.locator("//div[contains(@id,'edit-address')]//a[text()='Remove']")
-
-        this.reviewAddressText = page.locator('"Review your address"')
+        this.reviewAddressText = page.getByText('Review your address')
     }
 
     async enterFullName(name:string){
-
-        await this.fullName.fill(name)
 
         await this.fullName.fill(name)
     }
@@ -58,15 +49,9 @@ export class AddAddressPage extends BasePage{
     async enterMobileNumber(mobile:string){
 
         await this.mobileNumber.fill(mobile)
-
-        await this.mobileNumber.fill(mobile)
     }
 
     async enterPinCode(zipCode:string){
-
-        this.sleep(3000)
-
-        await this.pinCode.fill(zipCode)
 
         await this.pinCode.fill(zipCode)
     }
@@ -74,39 +59,23 @@ export class AddAddressPage extends BasePage{
     async enterHouseNo(houseNo:string){
 
         await this.flatHouse.fill(houseNo)
-
-        await this.flatHouse.fill(houseNo)
     }
 
     async enterStreetAddress(address:string){
-
-        await this.streetAddress.fill(address)
 
         await this.streetAddress.fill(address)
     }
 
     async getCityName():Promise<string>{
 
-        const cityValue = await this.page.evaluate(() =>{
-
-            const cityElement = document.getElementById('address-ui-widgets-enterAddressCity') as HTMLInputElement
-
-            return cityElement ? cityElement.value : '';
-        })
-
-        return cityValue;
+        return await this.townCity.inputValue()
     }
 
     async getStateName():Promise<string>{
 
-        const stateValue = await this.page.evaluate(() =>{
+        const stateDropdown = this.page.locator('#address-ui-widgets-enterAddressStateOrRegion-dropdown-nativeId')
 
-            const stateElement = document.getElementById('address-ui-widgets-enterAddressStateOrRegion-dropdown-nativeId') as HTMLInputElement
-
-            return stateElement ? stateElement.value : '';
-        })
-
-        return stateValue;
+        return await stateDropdown.inputValue()
     }
 
     async clickAddAddressButton(){

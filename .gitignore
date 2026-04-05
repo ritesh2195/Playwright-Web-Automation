@@ -3,3 +3,9 @@ node_modules/
 /playwright-report/
 /playwright/.cache/
 /allure-results
+.env
+.env.dev
+.env.qa
+.env.uat
+.env.prod
+.github/

@@ -1,5 +1,5 @@
 import { Locator, Page } from "@playwright/test";
-import { NamePrice } from "../models/page-interface";
+import { NamePrice } from "../types";
 import { BasePage } from "./base-page";
 
 export class CartPage extends BasePage{
@@ -11,11 +11,9 @@ export class CartPage extends BasePage{
 
         super(page)
 
-        this.page = page
+        this.cartTotalPrice = page.locator('#sc-subtotal-amount-buybox span').nth(0)
 
-        this.cartTotalPrice = page.locator("//span[@id='sc-subtotal-amount-buybox']//span").nth(0)
-
-        this.cartPageProductName = page.locator("//span[contains(@class,'a-truncate-cut')]")
+        this.cartPageProductName = page.locator('span.a-truncate-cut')
     }
 
     async getCartPageProductDetails():Promise<NamePrice>{

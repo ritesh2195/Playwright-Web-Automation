@@ -1,37 +1,39 @@
-import test, { expect } from "../src/utils/fixture-util";
+import test, { expect } from "../src/fixtures/page-fixtures";
+import { credentials } from "../src/config/env";
 
 
-const configData = JSON.parse(
-  JSON.stringify(require("../src/test-data/login.json"))
-);
+const loginData = require("../src/test-data/login.json");
 
-test.beforeEach(async function({homePage,page}){
-  await homePage.launchURL();
+test.describe('Login Tests', () => {
 
-  await homePage.getHeaaderPage().navigateToLoginPage();
-})
+  test.beforeEach(async function({homePage, headerPage}){
+    await homePage.launchURL();
 
-test("Login Test with valid credential", async function ({loginPage,homePage}) {
+    await headerPage.navigateToLoginPage();
+  })
 
-  await loginPage.enterEmailAndContinue(configData.email);
+  test("Login Test with valid credential", async function ({loginPage, headerPage}) {
 
-  await loginPage.enterPasswordAndSignIn(configData.password);
+    await loginPage.enterEmailAndContinue(credentials.email);
 
-  expect(await homePage.getHeaaderPage().getUserName()).toEqual(
-    `Hello, ${configData.name}`
-  );
-});
+    await loginPage.enterPasswordAndSignIn(credentials.password);
 
-test("Login with invalid email id", async function ({loginPage}) {
+    expect(await headerPage.getUserName()).toEqual(
+      `Hello, ${credentials.name}`
+    );
+  });
 
-  await loginPage.enterEmailAndContinue('ajbsdhidsh@email.com');
+  test("Login with invalid email id", async function ({loginPage}) {
 
-  const { isAlrtIconDisplayed, isAlertHeaderDisplayed, isAlertMessage } =
-    await loginPage.verifyOnUnSuccessfulLoginAlert();
+    await loginPage.enterEmailAndContinue(loginData.invalidEmail);
 
-  expect(isAlrtIconDisplayed).toBeTruthy();
+    const { isAlrtIconDisplayed, isAlertHeaderDisplayed, isAlertMessage } =
+      await loginPage.verifyOnUnSuccessfulLoginAlert();
 
-  expect(isAlertHeaderDisplayed).toBeTruthy();
+    expect(isAlrtIconDisplayed).toBeTruthy();
 
-  expect(isAlertMessage).toBeTruthy();
+    expect(isAlertHeaderDisplayed).toBeTruthy();
+
+    expect(isAlertMessage).toBeTruthy();
+  });
 });

@@ -1,7 +1,8 @@
 import { Locator, Page } from "@playwright/test";
-import { NamePrice } from "../models/page-interface";
+import { NamePrice } from "../types";
 import { BasePage } from "./base-page";
 import { CartPage } from "./cart-page";
+import { ProductReviewPage } from "./product-review-page";
 
 export class ProductDetailsPage extends BasePage{
 
@@ -12,26 +13,27 @@ export class ProductDetailsPage extends BasePage{
     private readonly quantityDropDown:Locator
     private readonly cartLink:Locator
     private readonly productCountInCartIcon:Locator
+    private readonly starRatingOnPDP:Locator
 
     constructor(page: Page){
 
         super(page)
 
-        this.page = page
+        this.productNameOnDetailsPage = page.locator('#productTitle')
 
-        this.productNameOnDetailsPage = page.locator("//span[@id='productTitle']")
+        this.productPriceOnDetailsPage = page.locator('#corePriceDisplay_desktop_feature_div span.a-price-whole').nth(0)
 
-        this.productPriceOnDetailsPage = page.locator("//div[@id='corePriceDisplay_desktop_feature_div']//span[contains(@class,'a-price-whole')]").nth(0)
+        this.addToCartButton = page.locator('#add-to-cart-button')
 
-        this.addToCartButton = page.locator('id=add-to-cart-button')
+        this.buyNowButton = page.locator('#buy-now-button')
 
-        this.buyNowButton = page.locator('id=buy-now-button')
+        this.quantityDropDown = page.locator('#quantity')
 
-        this.quantityDropDown = page.locator('id=quantity')
+        this.cartLink = page.locator('#nav-cart-count-container')
 
-        this.cartLink = page.locator('id=nav-cart-count-container')
+        this.productCountInCartIcon = page.locator('#nav-cart-count-container span').first()
 
-        this.productCountInCartIcon = page.locator("(//div[@id='nav-cart-count-container']//span)[1]")
+        this.starRatingOnPDP = page.locator('#cm-cr-dp-review-rating-section i.a-icon-star')
         
     }
 
@@ -75,5 +77,14 @@ export class ProductDetailsPage extends BasePage{
         await this.cartLink.click()
 
         return new CartPage(this.page)
+    }
+
+    async selectRatingAndWriteReview(rating: number):Promise<ProductReviewPage>{
+
+        await this.starRatingOnPDP.nth(rating - 1).click()
+
+        await this.page.waitForLoadState('load')
+
+        return new ProductReviewPage(this.page)
     }
 }

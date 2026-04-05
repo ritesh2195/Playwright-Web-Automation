@@ -15,7 +15,7 @@ export class BasePage{
         });
       }
 
-    async getPageTilt(): Promise<string>{
+    async getPageTitle(): Promise<string>{
 
         return await this.page.title() || ''
     }

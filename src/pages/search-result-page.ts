@@ -1,5 +1,5 @@
 import { Locator, Page } from "@playwright/test";
-import { NamePrice } from "../models/page-interface";
+import { NamePrice } from "../types";
 import { BasePage } from "./base-page";
 import { ProductDetailsPage } from "./product-details-page";
 
@@ -12,11 +12,9 @@ export class SearchResultPage extends BasePage{
 
         super(page)
 
-        this.page = page;
+        this.productName = page.locator('span.a-size-base-plus')
 
-        this.productName = page.locator("//span[contains(@class,'a-size-base-plus')]")
-
-        this.productPrice = page.locator("//span[@class='a-price']//child::span//child::span[2]")
+        this.productPrice = page.locator('span.a-price span span:nth-child(2)')
     }
 
     async getFirstProductDetails():Promise<NamePrice>{

@@ -9,9 +9,7 @@ export class AccountPage extends BasePage{
 
         super(page)
 
-        this.page = page;
-
-        this.addressLink = page.locator("//h2[contains(text(),'Your Addresses')]")
+        this.addressLink = page.getByRole('heading', { name: 'Your Addresses' })
 
     }
 

@@ -1,5 +1,5 @@
 import { Locator, Page } from "@playwright/test";
-import { LoginAlert } from "../models/page-interface";
+import { LoginAlert } from "../types";
 import { BasePage } from "./base-page";
 
 export class LoginPage extends BasePage{
@@ -16,27 +16,21 @@ export class LoginPage extends BasePage{
 
     super(page);
 
-    this.page = page;
+    this.emailInput = page.getByRole('textbox', { name: 'Email' });
 
-    this.emailInput = page.locator("//input[@type='email']");
+    this.passwordInput = page.locator('#ap_password');
 
-    this.passwordInput = page.locator("id=ap_password");
+    this.continueButton = page.getByRole('button', { name: 'Continue' });
 
-    this.continueButton = page.getByRole('button',{name:'Continue'})
-
-    this.signInButton = page.locator("id=signInSubmit");
+    this.signInButton = page.locator('#signInSubmit');
 
     this.alertIcon = page
-      .locator("//i[contains(@class,'a-icon-alert')]")
+      .locator('i.a-icon-alert')
       .nth(0);
 
-    this.alertHeaderText = page.locator(
-      "//h4[contains(text(),'There was a problem')]"
-    );
+    this.alertHeaderText = page.getByRole('heading', { name: 'There was a problem' });
 
-    this.alertMessage = page.locator(
-      "//span[contains(text(),'We cannot find an account with that email address')]"
-    );
+    this.alertMessage = page.getByText('We cannot find an account with that email address');
   }
 
   async enterEmailAndContinue(email: string) {

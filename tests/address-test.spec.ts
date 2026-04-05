@@ -1,62 +1,64 @@
-import test, { expect } from "../src/utils/fixture-util";
+import test, { expect } from "../src/fixtures/page-fixtures";
+import { credentials } from "../src/config/env";
 
-const configData = JSON.parse(
-    JSON.stringify(require("../src/test-data/login.json"))
-  );
+const addressData = require("../src/test-data/address.json");
 
-const addressData = JSON.parse(
-    JSON.stringify(require("../src/test-data/address.json"))
-  );
+test.describe('Address Tests', () => {
 
-test.beforeEach(async function({homePage,loginPage,accountPage}){
+  test.beforeEach(async function({homePage, headerPage, loginPage, accountPage}){
 
-  await homePage.launchURL()
+    await homePage.launchURL()
 
-  await homePage.getHeaaderPage().navigateToLoginPage()
+    await headerPage.navigateToLoginPage()
 
-  await loginPage.enterEmailAndContinue(configData.email)
+    await loginPage.enterEmailAndContinue(credentials.email)
 
-  await loginPage.enterPasswordAndSignIn(configData.password)
+    await loginPage.enterPasswordAndSignIn(credentials.password)
 
-  await homePage.getHeaaderPage().navigateToAccountPage()
+    await headerPage.navigateToAccountPage()
 
-  await accountPage.navigateToAddressPage()
+    await accountPage.navigateToAddressPage()
 
-})  
+  })  
 
-test('Address functionality validation', async function({yourAddress,addAddressPage}){
+  test('Address functionality validation', async function({yourAddress,addAddressPage}){
 
-    await yourAddress.clickAddAddressLink()
+      await yourAddress.clickAddAddressLink()
 
-    await addAddressPage.enterPinCode(addressData.pinCode);
+      await addAddressPage.enterPinCode(addressData.pinCode)
 
-    await addAddressPage.enterPinCode(addressData.pinCode)
+      const city:string = await addAddressPage.getCityName()
 
-    const city:string = await addAddressPage.getCityName()
+      expect(city).toEqual(addressData.city)
 
-    expect(city).toEqual(addressData.city)
+      const state:string = await addAddressPage.getStateName()
 
-    const state:string = await addAddressPage.getStateName()
+      expect(state).toEqual(addressData.state)
 
-    expect(state).toEqual(addressData.state)
+      await addAddressPage.enterFullName(addressData.fullName)
 
-    await addAddressPage.enterFullName(addressData.fullName)
+      await addAddressPage.enterMobileNumber(addressData.mobile)
 
-    await addAddressPage.enterMobileNumber(addressData.mobile)
+      await addAddressPage.enterHouseNo(addressData.house)
 
-    await addAddressPage.enterHouseNo(addressData.house)
+      await addAddressPage.enterStreetAddress(addressData.area)
 
-    await addAddressPage.enterStreetAddress(addressData.area)
+      await addAddressPage.clickAddAddressButton()
 
-    await addAddressPage.clickAddAddressButton()
+      expect('Address saved').toEqual(await yourAddress.getConfirmationMessage())
+  })
 
-    expect('Address saved').toEqual(await yourAddress.getConfirmationMessage())
-})
+  test('Delete address validation',async function({yourAddress}){
 
-test('Delete address validation',async function({yourAddress}){
+    const countBefore = await yourAddress.getAddressCount()
 
-  await yourAddress.deleteAddress(addressData.fullName)
+    await yourAddress.deleteAddress(addressData.fullName)
 
-  expect(await yourAddress.getConfirmationMessage()).toContain('Address deleted')
+    expect(await yourAddress.getConfirmationMessage()).toContain('Address deleted')
 
-})
+    const countAfter = await yourAddress.getAddressCount()
+
+    expect(countAfter).toBeLessThan(countBefore)
+
+  })
+});

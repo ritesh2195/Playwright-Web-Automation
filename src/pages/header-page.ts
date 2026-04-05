@@ -11,16 +11,14 @@ export class HeaderPage extends BasePage{
     constructor(page: Page){
 
         super(page);
-        
-        this.page = page
 
-        this.signInLink = page.locator("id=nav-link-accountList");
+        this.signInLink = page.locator('#nav-link-accountList');
 
-        this.accountListLine1 = page.locator("id=nav-link-accountList-nav-line-1");
+        this.accountListLine1 = page.locator('#nav-link-accountList-nav-line-1');
 
-        this.searchTextBox = page.locator("//input[@placeholder='Search Amazon.in']");
+        this.searchTextBox = page.getByPlaceholder('Search Amazon.in');
 
-        this.searchAutoListOption = page.locator("//div[@class='s-suggestion-container']//div");
+        this.searchAutoListOption = page.locator('div.s-suggestion-container div');
     }
 
     async navigateToLoginPage(){
